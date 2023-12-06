@@ -12,9 +12,103 @@
       href="./assets/images/favicon-32x32.png"
     />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
     <title>Frontend Mentor | Tip calculator app</title>
 
     <style>
+      :root {
+        --very-dark-cyan: hsl(183, 100%, 15%);
+        --dark-grayish-cyan: hsl(186, 14%, 43%);
+        --grayish-cyan: hsl(184, 14%, 56%);
+        --light-grayish-cyan: hsl(185, 41%, 84%);
+        --very-light-grayish-cyan: hsl(189, 41%, 97%);
+        --white: hsl(0, 0%, 100%);
+      }
+
+      body {
+        font-family: "Space Mono", monospace;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        min-height: 100vh;
+        background-color: var(--light-grayish-cyan);
+      }
+
+      .calculator {
+        padding-top: 2rem;
+        border-top-right-radius: 1.75rem;
+        border-top-left-radius: 1.75rem;
+      }
+
+      .calculator,
+      footer {
+        background-color: var(--white);
+      }
+
+      input[type="text"] {
+        background-color: var(--very-light-grayish-cyan);
+        border: none;
+        border-radius: .25rem;
+        font-size: 1.5rem;
+        padding: .5rem 1rem;
+        box-sizing: border-box;
+      }
+
+      label {
+        background-color: var(--very-dark-cyan);
+        border-radius: 0.25rem;
+        position: relative;
+        color: var(--very-light-grayish-cyan);
+      }
+
+      input[type="radio"] {
+        visibility: hidden;
+        position: absolute;
+      }
+
+      .bill {
+        background-image: url('./assets/images/icon-dollar.svg');
+        background-repeat: no-repeat;
+        background-position: 1rem center;
+      }
+      
+      .people {
+        background-image: url('./assets/images/icon-person.svg');
+        background-repeat: no-repeat;
+        background-position: 1rem center;
+      }
+
+      .center-block {
+        width: calc(100% - 4rem);
+        margin: 0 auto;
+      }
+
+      .result {
+        background-color: var(--very-dark-cyan);
+        color: var(--very-light-grayish-cyan);
+        padding: 1rem;
+        box-sizing: border-box;
+        border-radius: .75rem;
+      }
+
+      .block {
+        display: block;
+      }
+
+      .button {
+        
+      }
+
       .attribution {
         font-size: 11px;
         text-align: center;
@@ -24,99 +118,121 @@
       }
     </style>
   </head>
-  <body class="container">
-    <header>
-      <h1>
-        <img src="./assets/images/logo.svg" alt="" />
-      </h1>
-    </header>
-    <main>
-      <h2>Bill</h2>
-      <input type="text" style="text-align: right" id="bill" oninput="validateNumber(this)" />
+  <body>
+    <div class="container">
+      <header style="height: 8rem; display: grid; place-items: center">
+        <img src="./assets/images/logo.svg" alt="Logo" />
+      </header>
+      <main class="calculator">
+        <h3 class="center-block">Bill</h3>
+        <input
+          type="text"
+          id="bill"
+          oninput="validateNumber(this)"
+          class="block center-block bill"
+        />
 
-      <h2>Select Tip %</h2>
-      <label for="5">
-        <input
-          id="5"
-          name="percentage"
-          type="radio"
-          placeholder="5%"
-          value="5"
-        />5
-      </label>
-      <label for="10">
-        <input
-          id="10"
-          name="percentage"
-          type="radio"
-          placeholder="10%"
-          value="10"
-        />10
-      </label>
-      <label for="15">
-        <input
-          id="15"
-          name="percentage"
-          type="radio"
-          placeholder="15%"
-          value="15"
-        />15
-      </label>
-      <label for="25">
-        <input
-          id="25"
-          name="percentage"
-          type="radio"
-          placeholder="25%"
-          value="25"
-        />25
-      </label>
-      <label for="50">
-        <input
-          id="50"
-          name="percentage"
-          type="radio"
-          placeholder="50%"
-          value="50"
-        />50
-      </label>
-      <label for="custom">
-        <input id="custom" name="percentage" type="radio" />
-        <input id="percentage" type="text" placeholder="Custom" oninput="validateNumber(this)" />
-      </label>
-
-      <h2>Number of People</h2>
-      <input style="text-align: right" type="text" id="people" oninput="validateInteger(this)" />
-
-      <div>
-        <div>
-          <span>
-            <span>Tip Amount</span>
-            / person
-          </span>
-          <span id="tip_amount">$0.00</span>
+        <h3 class="center-block">Select Tip %</h3>
+        <div class="center-block">
+          <label for="5">
+            <input
+              id="5"
+              name="percentage"
+              type="radio"
+              placeholder="5%"
+              value="5"
+            />5%
+          </label>
+          <label for="10">
+            <input
+              id="10"
+              name="percentage"
+              type="radio"
+              placeholder="10%"
+              value="10"
+            />10%
+          </label>
+          <label for="15">
+            <input
+              id="15"
+              name="percentage"
+              type="radio"
+              placeholder="15%"
+              value="15"
+            />15%
+          </label>
+          <label for="25">
+            <input
+              id="25"
+              name="percentage"
+              type="radio"
+              placeholder="25%"
+              value="25"
+            />25%
+          </label>
+          <label for="50">
+            <input
+              id="50"
+              name="percentage"
+              type="radio"
+              placeholder="50%"
+              value="50"
+            />50%
+          </label>
+          <label for="custom">
+            <input id="custom" name="percentage" type="radio" />
+            <input
+              id="percentage"
+              type="text"
+              placeholder="Custom"
+              oninput="validateNumber(this)"
+            />
+          </label>
         </div>
-        <div>
-          <span>
-            <span>Total</span>
-            / person
-          </span>
-          <span id="total">$0.00</span>
-        </div>
-        <button>Reset</button>
-      </div>
-    </main>
 
-    <!-- <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div> -->
+        <h3 class="center-block">Number of People</h3>
+        <input
+          style="text-align: right"
+          type="text"
+          id="people"
+          oninput="validateInteger(this)"
+          class="block center-block people"
+        />
+
+        <div class="center-block result">
+          <div>
+            <span>
+              <span>Tip Amount</span>
+              / person
+            </span>
+            <span id="tip_amount">$0.00</span>
+          </div>
+          <div>
+            <span>
+              <span>Total</span>
+              / person
+            </span>
+            <span id="total">$0.00</span>
+          </div>
+          <button class="button">Reset</button>
+        </div>
+      </main>
+
+      <footer class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+          >Frontend Mentor</a
+        >. Coded by <a href="#">Your Name Here</a>.
+      </footer>
+    </div>
     <script>
-      const controls = ['bill', 'people', 'percentage']
+      const controls = ["bill", "people", "percentage"];
 
-      controls.forEach(id => getElement(id).addEventListener("change", (e) => {
-        calculate();
-      }))
+      controls.forEach((id) =>
+        getElement(id).addEventListener("change", (e) => {
+          calculate();
+        })
+      );
 
       Array.from(document.getElementsByName("percentage")).forEach((radioBtn) =>
         radioBtn.addEventListener("change", (e) => {
@@ -132,11 +248,13 @@
       }
 
       function getPercentage() {
-        const choice = document.querySelector('input[name="percentage"]:checked');
+        const choice = document.querySelector(
+          'input[name="percentage"]:checked'
+        );
         if (!choice) return 0;
-        if (choice.id !== "custom") return parseInt(choice.value)
-        const input = parseFloat(getElement("percentage").value)
-        return isNaN(input)?0:input;
+        if (choice.id !== "custom") return parseInt(choice.value);
+        const input = parseFloat(getElement("percentage").value);
+        return isNaN(input) ? 0 : input;
       }
 
       function calculate() {
@@ -156,21 +274,23 @@
       }
 
       function setResult(tipAmountByPerson, totalByPerson) {
-        getElement("tip_amount").textContent = `\$${tipAmountByPerson.toFixed(2)}`;
+        getElement("tip_amount").textContent = `\$${tipAmountByPerson.toFixed(
+          2
+        )}`;
         getElement("total").textContent = `\$${totalByPerson.toFixed(2)}`;
       }
 
-      function getElement(id){
-        return document.getElementById(id)
+      function getElement(id) {
+        return document.getElementById(id);
       }
 
       function validateNumber(input) {
-        input.value = input.value.replace(/[^\d.]/g, '')
+        input.value = input.value.replace(/[^\d.]/g, "");
       }
 
       function validateInteger(input) {
-        input.value = input.value.replace(/[^\d]/g, '')
+        input.value = input.value.replace(/[^\d]/g, "");
       }
-    </script> 
+    </script>
   </body>
 </html>
