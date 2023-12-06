@@ -8,9 +8,6 @@
   
   <title>Frontend Mentor | Tip calculator app</title>
 
-  <link rel="stylesheet" href="./assets/styles/css/styles.css">
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
     .attribution { font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
@@ -24,7 +21,7 @@
   </header>
   <main>
     <h2>Bill</h2>
-    <input type="text" style="text-align: right;">
+    <input type="text" style="text-align: right;" id="bill">
   
     <h2>Select Tip %</h2>
     <label for="5">
@@ -48,7 +45,7 @@
     </label>
   
     <h2>Number of People</h2>
-    <input style="text-align: right;" >
+    <input style="text-align: right;" type="text" id="people" >
 
     <div>
       <div>
@@ -56,14 +53,14 @@
           <span>Tip Amount</span>
           / person
         </span>
-        <span>$4.27</span>
+        <span id="tip_amount">$4.27</span>
       </div>
       <div>
         <span>
           <span>Total</span>
           / person
         </span>
-        <span>$32.79</span>
+        <span id="total">$32.79</span>
       </div> 
       <button>Reset</button>
     </div>
@@ -73,5 +70,32 @@
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.
   </div> -->
+  <script>
+    
+    function getValue(id) {
+      const value =  parseFloat(document.getElementById(id).value)
+      console.log(value);
+      return value
+    }
+
+    function getPercentage(){
+      return 10
+    }
+
+    function calculate(){
+      const billValue = getValue('bill')
+      const people = getValue('people')
+      const tipPercenage = getPercentage()
+      
+      const tipAmountByPerson = Math.floor(billValue * tipPercenage / people) / 100 
+      const totalByPerson = (billValue * (100 + tipPercenage) / 100 / people).toFixed(2)
+
+      document.getElementById('tip_amount').textContent = `\$${tipAmountByPerson}`
+      document.getElementById('total').textContent = `\$${totalByPerson}`
+
+    }
+
+    calculate()
+  </script>
 </body>
 </html>
