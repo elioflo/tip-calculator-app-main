@@ -1,101 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Tip calculator app</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
 
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
-</head>
-<body class="container">
-  <header>
-    <h1>
-      <img src="./assets/images/logo.svg" alt="">
-    </h1>
-  </header>
-  <main>
-    <h2>Bill</h2>
-    <input type="text" style="text-align: right;" id="bill">
-  
-    <h2>Select Tip %</h2>
-    <label for="5">
-      <input id="5" name="percentage" type="radio" placeholder="5%"  value="5">5
-    </label>
-    <label for="10">
-      <input id="10" name="percentage" type="radio" placeholder="10%"  value="10">10
-    </label>
-    <label for="15">
-      <input id="15" name="percentage" type="radio" placeholder="15%"  value="15">15
-    </label>
-    <label for="25">
-      <input id="25" name="percentage" type="radio" placeholder="25%"  value="25">25
-    </label>
-    <label for="50">
-      <input id="50" name="percentage" type="radio" placeholder="50%"  value="50">50  
-    </label>
-    <label for="custom">
-      <input id="custom" name="percentage" type="radio">
-      <input type="text" placeholder="Custom" >
-    </label>
-  
-    <h2>Number of People</h2>
-    <input style="text-align: right;" type="text" id="people" >
+    <title>Frontend Mentor | Tip calculator app</title>
 
-    <div>
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+  </head>
+  <body class="container">
+    <header>
+      <h1>
+        <img src="./assets/images/logo.svg" alt="" />
+      </h1>
+    </header>
+    <main>
+      <h2>Bill</h2>
+      <input type="text" style="text-align: right" id="bill" oninput="validateNumber(this)" />
+
+      <h2>Select Tip %</h2>
+      <label for="5">
+        <input
+          id="5"
+          name="percentage"
+          type="radio"
+          placeholder="5%"
+          value="5"
+        />5
+      </label>
+      <label for="10">
+        <input
+          id="10"
+          name="percentage"
+          type="radio"
+          placeholder="10%"
+          value="10"
+        />10
+      </label>
+      <label for="15">
+        <input
+          id="15"
+          name="percentage"
+          type="radio"
+          placeholder="15%"
+          value="15"
+        />15
+      </label>
+      <label for="25">
+        <input
+          id="25"
+          name="percentage"
+          type="radio"
+          placeholder="25%"
+          value="25"
+        />25
+      </label>
+      <label for="50">
+        <input
+          id="50"
+          name="percentage"
+          type="radio"
+          placeholder="50%"
+          value="50"
+        />50
+      </label>
+      <label for="custom">
+        <input id="custom" name="percentage" type="radio" />
+        <input id="percentage" type="text" placeholder="Custom" oninput="validateNumber(this)" />
+      </label>
+
+      <h2>Number of People</h2>
+      <input style="text-align: right" type="text" id="people" oninput="validateInteger(this)" />
+
       <div>
-        <span>
-          <span>Tip Amount</span>
-          / person
-        </span>
-        <span id="tip_amount">$4.27</span>
+        <div>
+          <span>
+            <span>Tip Amount</span>
+            / person
+          </span>
+          <span id="tip_amount">$0.00</span>
+        </div>
+        <div>
+          <span>
+            <span>Total</span>
+            / person
+          </span>
+          <span id="total">$0.00</span>
+        </div>
+        <button>Reset</button>
       </div>
-      <div>
-        <span>
-          <span>Total</span>
-          / person
-        </span>
-        <span id="total">$32.79</span>
-      </div> 
-      <button>Reset</button>
-    </div>
-  </main>
-  
-  <!-- <div class="attribution">
+    </main>
+
+    <!-- <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.
   </div> -->
-  <script>
-    
-    function getValue(id) {
-      const value =  parseFloat(document.getElementById(id).value)
-      console.log(value);
-      return value
-    }
+    <script>
+      const controls = ['bill', 'people', 'percentage']
 
-    function getPercentage(){
-      return 10
-    }
+      controls.forEach(id => getElement(id).addEventListener("change", (e) => {
+        calculate();
+      }))
 
-    function calculate(){
-      const billValue = getValue('bill')
-      const people = getValue('people')
-      const tipPercenage = getPercentage()
-      
-      const tipAmountByPerson = Math.floor(billValue * tipPercenage / people) / 100 
-      const totalByPerson = (billValue * (100 + tipPercenage) / 100 / people).toFixed(2)
+      Array.from(document.getElementsByName("percentage")).forEach((radioBtn) =>
+        radioBtn.addEventListener("change", (e) => {
+          if (radioBtn.checked) {
+            calculate();
+          }
+        })
+      );
 
-      document.getElementById('tip_amount').textContent = `\$${tipAmountByPerson}`
-      document.getElementById('total').textContent = `\$${totalByPerson}`
+      function getValue(id) {
+        const value = parseFloat(getElement(id).value);
+        return isNaN(value) ? 0 : value;
+      }
 
-    }
+      function getPercentage() {
+        const choice = document.querySelector('input[name="percentage"]:checked');
+        if (!choice) return 0;
+        if (choice.id !== "custom") return parseInt(choice.value)
+        const input = parseFloat(getElement("percentage").value)
+        return isNaN(input)?0:input;
+      }
 
-    calculate()
-  </script>
-</body>
+      function calculate() {
+        const billValue = getValue("bill");
+        const people = getValue("people");
+        const tipPercenage = getPercentage();
+
+        if (billValue === 0 || people === 0) {
+          setResult(0, 0);
+          return;
+        }
+        const tipAmountByPerson =
+          Math.floor((billValue * tipPercenage) / people) / 100;
+        const totalByPerson = (billValue * (100 + tipPercenage)) / 100 / people;
+
+        setResult(tipAmountByPerson, totalByPerson);
+      }
+
+      function setResult(tipAmountByPerson, totalByPerson) {
+        getElement("tip_amount").textContent = `\$${tipAmountByPerson.toFixed(2)}`;
+        getElement("total").textContent = `\$${totalByPerson.toFixed(2)}`;
+      }
+
+      function getElement(id){
+        return document.getElementById(id)
+      }
+
+      function validateNumber(input) {
+        input.value = input.value.replace(/[^\d.]/g, '')
+      }
+
+      function validateInteger(input) {
+        input.value = input.value.replace(/[^\d]/g, '')
+      }
+    </script> 
+  </body>
 </html>
