@@ -23,6 +23,7 @@
 
     <style>
       :root {
+        --strong-cyan: hsl(172, 67%, 45%);
         --very-dark-cyan: hsl(183, 100%, 15%);
         --dark-grayish-cyan: hsl(186, 14%, 43%);
         --grayish-cyan: hsl(184, 14%, 56%);
@@ -62,6 +63,7 @@
         font-size: 1.5rem;
         padding: .5rem 1rem;
         box-sizing: border-box;
+        text-align: right;
       }
 
       label {
@@ -74,6 +76,11 @@
       input[type="radio"] {
         visibility: hidden;
         position: absolute;
+      }
+
+      label:has(input[type="radio"]:checked) {
+        color: var(--very-dark-cyan);
+        background-color: var(--strong-cyan);
       }
 
       .bill {
@@ -96,9 +103,10 @@
       .result {
         background-color: var(--very-dark-cyan);
         color: var(--very-light-grayish-cyan);
-        padding: 1rem;
+        padding: 1.25rem 1rem;
         box-sizing: border-box;
         border-radius: .75rem;
+        margin-top: 2rem;
       }
 
       .block {
@@ -106,7 +114,15 @@
       }
 
       .button {
-        
+        width: 100%;
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+        border-radius: .25rem;
+        border: none;
+        text-transform: uppercase;
+        font-weight: bolder;
+        background-color: var(--strong-cyan);
+        color: var(--very-dark-cyan);
       }
 
       .attribution {
@@ -127,6 +143,7 @@
         <h3 class="center-block">Bill</h3>
         <input
           type="text"
+          placeholder="0"
           id="bill"
           oninput="validateNumber(this)"
           class="block center-block bill"
@@ -192,29 +209,29 @@
 
         <h3 class="center-block">Number of People</h3>
         <input
-          style="text-align: right"
           type="text"
+          placeholder="0"
           id="people"
           oninput="validateInteger(this)"
           class="block center-block people"
         />
 
         <div class="center-block result">
-          <div>
-            <span>
-              <span>Tip Amount</span>
-              / person
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: var(--very-light-grayish-cyan); line-height: 1rem;" >
+              Tip Amount <br>
+              <span style="color: var(--grayish-cyan); font-size: .8rem;">/ person</span>
             </span>
-            <span id="tip_amount">$0.00</span>
+            <span id="tip_amount" style="font-size: 1.5rem; color:var(--strong-cyan)">$0.00</span>
           </div>
-          <div>
-            <span>
-              <span>Total</span>
-              / person
+          <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0;">
+            <span style="color: var(--very-light-grayish-cyan); line-height: 1rem;" >
+              Total <br>
+              <span style="color: var(--grayish-cyan); font-size: .8rem;">/ person</span>
             </span>
-            <span id="total">$0.00</span>
+            <span id="total" style="font-size: 1.5rem; color:var(--strong-cyan)">$0.00</span>
           </div>
-          <button class="button">Reset</button>
+          <button class="button" onclick="reset()">Reset</button>
         </div>
       </main>
 
@@ -290,6 +307,13 @@
 
       function validateInteger(input) {
         input.value = input.value.replace(/[^\d]/g, "");
+      }
+
+      function reset(){
+        getElement('bill').value = 0
+        getElement('people').value = 0
+        document.getElementsByName('percentage').forEach(item => item.checked=false)
+        calculate()
       }
     </script>
   </body>
