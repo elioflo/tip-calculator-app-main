@@ -49,6 +49,8 @@
         padding-top: 2rem;
         border-top-right-radius: 1.75rem;
         border-top-left-radius: 1.75rem;
+        color: var(--dark-grayish-cyan);
+        font-size: .75rem;
       }
 
       .calculator,
@@ -64,23 +66,8 @@
         padding: .5rem 1rem;
         box-sizing: border-box;
         text-align: right;
-      }
-
-      label {
-        background-color: var(--very-dark-cyan);
-        border-radius: 0.25rem;
-        position: relative;
-        color: var(--very-light-grayish-cyan);
-      }
-
-      input[type="radio"] {
-        visibility: hidden;
-        position: absolute;
-      }
-
-      label:has(input[type="radio"]:checked) {
         color: var(--very-dark-cyan);
-        background-color: var(--strong-cyan);
+        font-family: "Space Mono", monospace;
       }
 
       .bill {
@@ -88,7 +75,7 @@
         background-repeat: no-repeat;
         background-position: 1rem center;
       }
-      
+
       .people {
         background-image: url('./assets/images/icon-person.svg');
         background-repeat: no-repeat;
@@ -113,6 +100,28 @@
         display: block;
       }
 
+      .label {
+        background-color: var(--very-dark-cyan);
+        border-radius: 0.25rem;
+        color: var(--very-light-grayish-cyan);
+        position: relative;
+        display: grid;
+        place-items: center;
+        padding: .25rem 0;
+        font-size: 1.5rem;
+      }
+
+      .label:has(input[type="radio"]:checked) {
+        color: var(--very-dark-cyan);
+        background-color: var(--strong-cyan);
+      }
+
+      input[type="radio"] {
+        visibility: hidden;
+        position: absolute;
+      }
+
+
       .button {
         width: 100%;
         padding-top: .75rem;
@@ -123,6 +132,15 @@
         font-weight: bolder;
         background-color: var(--strong-cyan);
         color: var(--very-dark-cyan);
+      }
+
+      .percentages {
+        width: calc(100% - 4rem);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+
       }
 
       .attribution {
@@ -150,59 +168,71 @@
         />
 
         <h3 class="center-block">Select Tip %</h3>
-        <div class="center-block">
-          <label for="5">
-            <input
+        <div style="
+          display: grid; 
+          grid-template-columns: 1fr 1fr;
+          width: calc(100% - 4rem);
+          margin: 0 auto;
+          gap: .5rem 1rem;
+          ">
+          <label class="label" for="5">
+             <input
               id="5"
               name="percentage"
               type="radio"
               placeholder="5%"
               value="5"
-            />5%
+            />5% 
           </label>
-          <label for="10">
-            <input
+          <label class="label" for="10">
+             <input
               id="10"
               name="percentage"
               type="radio"
               placeholder="10%"
               value="10"
-            />10%
+            />10% 
           </label>
-          <label for="15">
-            <input
+          <label class="label" for="15">
+             <input
               id="15"
               name="percentage"
               type="radio"
               placeholder="15%"
               value="15"
-            />15%
+            />15% 
           </label>
-          <label for="25">
-            <input
+          <label class="label" for="25">
+             <input
               id="25"
               name="percentage"
               type="radio"
               placeholder="25%"
               value="25"
-            />25%
+            />25% 
           </label>
-          <label for="50">
-            <input
+          <label class="label" for="50">
+             <input
               id="50"
               name="percentage"
               type="radio"
               placeholder="50%"
               value="50"
-            />50%
+            />50% 
           </label>
-          <label for="custom">
+          <label class="label" for="custom" style="padding: 0; border-radius: .5rem;">
             <input id="custom" name="percentage" type="radio" />
             <input
               id="percentage"
               type="text"
               placeholder="Custom"
               oninput="validateNumber(this)"
+              style="
+              width: 100%; 
+              margin: 0;
+              padding: 0 1rem; 
+              height: 100%;
+              "
             />
           </label>
         </div>
@@ -217,19 +247,48 @@
         />
 
         <div class="center-block result">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: var(--very-light-grayish-cyan); line-height: 1rem;" >
-              Tip Amount <br>
-              <span style="color: var(--grayish-cyan); font-size: .8rem;">/ person</span>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <span
+              style="color: var(--very-light-grayish-cyan); line-height: 1rem"
+            >
+              Tip Amount <br />
+              <span style="color: var(--grayish-cyan); font-size: 0.8rem"
+                >/ person</span
+              >
             </span>
-            <span id="tip_amount" style="font-size: 1.5rem; color:var(--strong-cyan)">$0.00</span>
+            <span
+              id="tip_amount"
+              style="font-size: 1.5rem; color: var(--strong-cyan)"
+              >$0.00</span
+            >
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0;">
-            <span style="color: var(--very-light-grayish-cyan); line-height: 1rem;" >
-              Total <br>
-              <span style="color: var(--grayish-cyan); font-size: .8rem;">/ person</span>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin: 1.5rem 0;
+            "
+          >
+            <span
+              style="color: var(--very-light-grayish-cyan); line-height: 1rem"
+            >
+              Total <br />
+              <span style="color: var(--grayish-cyan); font-size: 0.8rem"
+                >/ person</span
+              >
             </span>
-            <span id="total" style="font-size: 1.5rem; color:var(--strong-cyan)">$0.00</span>
+            <span
+              id="total"
+              style="font-size: 1.5rem; color: var(--strong-cyan)"
+              >$0.00</span
+            >
           </div>
           <button class="button" onclick="reset()">Reset</button>
         </div>
@@ -309,11 +368,13 @@
         input.value = input.value.replace(/[^\d]/g, "");
       }
 
-      function reset(){
-        getElement('bill').value = 0
-        getElement('people').value = 0
-        document.getElementsByName('percentage').forEach(item => item.checked=false)
-        calculate()
+      function reset() {
+        getElement("bill").value = 0;
+        getElement("people").value = 0;
+        document
+          .getElementsByName("percentage")
+          .forEach((item) => (item.checked = false));
+        calculate();
       }
     </script>
   </body>
